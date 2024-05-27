@@ -112,6 +112,85 @@ async def get_recently_upload_batch(
 
 #     return batches
 
+from pydantic import BaseModel
+
+class RawInputItem(BaseModel):
+    raw_input: str
+    use_proxies: bool = False
+    proxies: List[str] = []
+    crawling_max_depth: int = 0
+    priority: int = 0
+    env: list[str] = []
+    source:str = ''
+
+
+class BatchRawInput(BaseModel):
+    raw_inputs: List[RawInputItem]
+    name: str
+
+
+@app.post("/api/submit_batch")
+async def submit(
+    batch_raw_input: BatchRawInput,
+):
+    from datetime import datetime
+#   payload = {
+#         "raw_inputs": [
+#             {
+#                 "raw_input": raw_input,
+#                 "use_proxies": False,
+#                 "proxies": [],
+#                 "crawling_max_depth": 0,
+#                 "priority": 0,
+#                 "env": ["iphone"],
+#                 "source": "unknown",
+#             }
+#             for raw_input in [
+#                 "facebook.com",
+#             ]
+#         ],
+#         "name": "file.csv",
+#     }
+
+#     # Define the headers
+#     headers = {
+#         # "Authorization": f"Bearer {crawler_token}",
+#         "Content-Type": "application/json",
+#     }
+
+#     # Define the URL
+#     url = f"http://{crawler_address}/api/submit_batch"
+
+#     # Send the POST request
+#     response = requests.post(url, headers=headers, data=json.dumps(payload))
+
+    batch_uuid = str(uuid.uuid4())
+    errors = []
+    succeeded_raw_input = []
+
+
+    is_file = batch_raw_input.name is not None and len(batch_raw_input.name) > 0
+
+    name = (
+            batch_raw_input.name
+            if is_file
+            else (
+                succeeded_raw_input[0].raw_input
+                if len(succeeded_raw_input) == 1
+                else ""
+            )
+        )
+    # mock_result_data = {"batch_uuid":"201cc4bd-09ee-4edf-94e3-db44d868d87b","is_file":True,"name":"file.csv","submitted":1,"submmited_to_url_fix":1,"errors_len":0,"errors":[],"succeeded_raw_input":[{"raw_input":"twitter.com","scan_uuid":"563db1da-5f40-4807-b8d1-329a0abf7be4","use_proxies":True,"proxies":[],"batch_uuid":"201cc4bd-09ee-4edf-94e3-db44d868d87b","crawling_max_depth":0,"priority":0,"timestamp":"2024-05-27 09:41:54","env":["desktop"],"source":"unknown"}]}
+    return {
+        "batch_uuid": batch_uuid,
+        "is_file": is_file,
+        "name": name,
+        "submitted": len(batch_raw_input.raw_inputs),
+        "submmited_to_url_fix": len(batch_raw_input.raw_inputs),
+        "errors_len": len(errors),
+        "errors": errors,
+        "succeeded_raw_input": [item.to_dict() for item in succeeded_raw_input],
+    }
 
 @app.get("/api/all_scanned_urls")
 async def get_all_scanned_urls(
@@ -130,7 +209,31 @@ async def get_all_scanned_urls(
             "url": f"https://{''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(random.randint(10, 30)))}.com",
             "batch_uuid": str(uuid.uuid4()),
             "scan_uuid": str(uuid.uuid4()),
-            "label": random.choice(["Benign", "Malicious", "Unknown"]),
+            "label": random.choice(["Benign", "Malicious", "Not Inference Yet"]),
+
+        }
+        for _ in range(limit)
+    ]
+
+
+@app.get("/api/filtered_scanned_urls")
+async def get_filtered_scanned_urls(
+        download_mode: bool = False,
+        from_index: int = 0,
+        limit: int = 10,
+):
+    import random
+    import string
+
+    return [
+        {
+
+            "insert_time": "2024-02-01T11:00:26.359495",
+            "device": random.choice(["iphone", "android", "desktop"]),
+            "url": f"https://{''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(random.randint(10, 30)))}.com",
+            "batch_uuid": str(uuid.uuid4()),
+            "scan_uuid": str(uuid.uuid4()),
+            "label": random.choice(["Benign", "Malicious", "Not Inferenced Yet","URL is OOD"]),
 
         }
         for _ in range(limit)
@@ -180,24 +283,13 @@ async def url_inference_per_device(
                 # "insert_time": "2024-05-15T11:00:26.359495",
                 "device": random.choice(["iphone", "android", "desktop"]),
                 "url": get_random_url(),
-                "status": random.choice(["done", "inference", "crawler", "etls"]),
-                "ood_classification": random.choice(["not ood", "", "unknown"]),
+                "status": random.choice(["Done", "Inference", "Crawler", "Not Started Yet"]),
+                "ood_classification": random.choice(["Not OOD", "OOD", "Not Inferenced Yet"]),
                 "scams_classification": random.choice(
-                    ["benign", "malicious", "unknown"]
+                    ["Benign", "Malicious", "Not Inferenced Yet","URL is OOD"]
                 ),
                 "enticement_method_classification": random.choice(
-                    [
-                        "Job",
-                        "Romance",
-                        "Investment",
-                        "Lottery & Gambling",
-                        "Finance & Banking",
-                        "Business & E-Commerce",
-                        "Public Services",
-                        "Adult content",
-                        "Streaming & Gaming",
-                        "Others",
-                    ]
+                    ['Adult Content & Dating', 'Finance & Banking','Job Scam', 'Business & E-Commerce', 'Other','Benign','URL is OOD', 'Not Inferenced Yet']
                 ),
                 "scan_uuid": str(uuid.uuid4()),
                 # "label": random.choice(["Benign", "Malicious", "Unknown"]),
@@ -252,29 +344,17 @@ async def get_model_prediction_per_device(
 
     return {
         "scams_model": {
-            "prediction": random.choice(["benign", "malicious", "unknown"]),
+            "prediction": random.choice(["Benign", "Malicious", "Not Inferenced Yet", "URL is OOD"]),
             "prediction_score": random.random(),
         },
         "ood_model": {
-            "prediction": random.choice(["not ood", "ood", "unknown"]),
+            "prediction": random.choice(["Not OOD", "OOD", "Not Inferenced Yet"]),
             "prediction_score": random.random(),
         },
         "enticement_model": {
-            "prediction": random.choice(["not ood", "ood", "unknown"]),
-            "prediction_score": random.choice(
-                [
-                    "Job",
-                    "Romance",
-                    "Investment",
-                    "Lottery & Gambling",
-                    "Finance & Banking",
-                    "Business & E-Commerce",
-                    "Public Services",
-                    "Adult content",
-                    "Streaming & Gaming",
-                    "Others",
-                ]
-            ),
+            "prediction": random.choice(['Adult Content & Dating', 'Finance & Banking','Job Scam', 'Business & E-Commerce', 'Other','Benign','URL is OOD', 'Not Inferenced Yet']),
+            "prediction_score": random.random()
+                
         },
     }
 
