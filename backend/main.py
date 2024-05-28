@@ -268,9 +268,9 @@ async def url_inference_per_device(batch_uuid: str) -> Optional[Dict]:
 async def url_ood_per_device(batch_uuid: str) -> Optional[Dict]:
     # TODO implment this function
     return {
-        "Not OOD": 600,
-        "OOD": 200, 
-        "Not Inferenced Yet": 200,
+        "not_ood": 600,
+        "ood": 200, 
+        "not_inferenced_yet": 200,
         "batch_uuid": batch_uuid,
     }
 
@@ -278,14 +278,14 @@ async def url_ood_per_device(batch_uuid: str) -> Optional[Dict]:
 async def url_enticement_per_device(batch_uuid: str) -> Optional[Dict]:
     # TODO implment this function
     return {
-        "Adult Content & Dating": 30, 
-        "Finance & Banking": 70,
-        "Job Scam": 50, 
-        "Business & E-Commerce": 50, 
-        "Other": 30,
-        "Benign": 370, 
-        "URL is OOD": 200, 
-        "Not Inferenced Yet": 200,
+        "adult_content_and_dating": 30, 
+        "finance_and_banking": 70,
+        "job_scam": 50, 
+        "business_and_ecommerce": 50, 
+        "other": 30,
+        "benign": 370, 
+        "url_is_ood": 200, 
+        "not_inferenced_yet": 200,
         "batch_uuid": batch_uuid,
     }
 
