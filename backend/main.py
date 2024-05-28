@@ -220,6 +220,7 @@ async def get_all_scanned_urls(
 async def get_filtered_scanned_urls(
         download_mode: bool = False,
         from_index: int = 0,
+        filter_object: str = "google.com",
         limit: int = 10,
 ):
     import random
@@ -230,7 +231,7 @@ async def get_filtered_scanned_urls(
 
             "insert_time": "2024-02-01T11:00:26.359495",
             "device": random.choice(["iphone", "android", "desktop"]),
-            "url": f"https://{''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(random.randint(10, 30)))}.com",
+            "url": f"https://{''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(random.randint(10, 30)))}.google.com",
             "batch_uuid": str(uuid.uuid4()),
             "scan_uuid": str(uuid.uuid4()),
             "label": random.choice(["Benign", "Malicious", "Not Inferenced Yet","URL is OOD"]),
@@ -263,13 +264,38 @@ async def url_inference_per_device(batch_uuid: str) -> Optional[Dict]:
         "batch_uuid": batch_uuid,
     }
 
+@app.get("/api/get_batch_status/urls_ood")
+async def url_ood_per_device(batch_uuid: str) -> Optional[Dict]:
+    # TODO implment this function
+    return {
+        "Not OOD": 600,
+        "OOD": 200, 
+        "Not Inferenced Yet": 200,
+        "batch_uuid": batch_uuid,
+    }
+
+@app.get("/api/get_batch_status/urls_enticement")
+async def url_enticement_per_device(batch_uuid: str) -> Optional[Dict]:
+    # TODO implment this function
+    return {
+        "Adult Content & Dating": 30, 
+        "Finance & Banking": 70,
+        "Job Scam": 50, 
+        "Business & E-Commerce": 50, 
+        "Other": 30,
+        "Benign": 370, 
+        "URL is OOD": 200, 
+        "Not Inferenced Yet": 200,
+        "batch_uuid": batch_uuid,
+    }
+
 
 @app.get("/api/get_batch_items")
 async def url_inference_per_device(
         batch_uuid: str,
         download_mode: bool,
         limit: int = 10,
-) -> Optional[Dict]:
+) -> Optional[List]:
     import random
     import string
 
@@ -277,27 +303,23 @@ async def url_inference_per_device(
         {"pasten": "pastenino"} if download_mode else {}
     )  # additiona data to download on csv
 
-    return [
-        {
+    return [{
             **{
                 # "insert_time": "2024-05-15T11:00:26.359495",
                 "device": random.choice(["iphone", "android", "desktop"]),
                 "url": get_random_url(),
                 "status": random.choice(["Done", "Inference", "Crawler", "Not Started Yet"]),
                 "ood_classification": random.choice(["Not OOD", "OOD", "Not Inferenced Yet"]),
-                "scams_classification": random.choice(
-                    ["Benign", "Malicious", "Not Inferenced Yet","URL is OOD"]
-                ),
-                "enticement_method_classification": random.choice(
-                    ['Adult Content & Dating', 'Finance & Banking','Job Scam', 'Business & E-Commerce', 'Other','Benign','URL is OOD', 'Not Inferenced Yet']
-                ),
+                "scams_classification": random.choice(["Benign", "Malicious", "Not Inferenced Yet","URL is OOD"]),
+                "enticement_method_classification": random.choice(['Adult Content & Dating', 'Finance & Banking','Job Scam', 'Business & E-Commerce', 'Other','Benign','URL is OOD', 'Not Inferenced Yet']),
                 "scan_uuid": str(uuid.uuid4()),
                 # "label": random.choice(["Benign", "Malicious", "Unknown"]),
             },
-            **download_dict_mock,
+            **download_dict_mock
         }
         for _ in range(limit)
     ]
+    
 
 
 def get_random_url():
@@ -308,13 +330,13 @@ def get_random_url():
 
 
 @app.get("/api/analysis/scan/get_redirection")
-async def get_redirection(scan_uuid: str, enviroment: str) -> Optional[Dict]:
+async def get_redirection(scan_uuid: str, enviroment: str) -> Optional[List]:
     # TODO implment this function
 
     return [
         {
             "url": get_random_url(),
-            "enviroment": enviroment,
+            "environment": enviroment,
             "depth": 0,
             "idx": i,
             "reason": 200,
@@ -530,7 +552,7 @@ async def get_crtsh_redirection(
     ]
 
 
-@app.get("/api/analysis/scan/get_domian")
+@app.get("/api/analysis/scan/get_domain")
 async def get_domain_rank_redirection(
         scan_uuid: str, enviroment: str, redictrion_idx: int, depth: int
 ) -> Optional[Dict]:
