@@ -1,6 +1,8 @@
 import {
   Box,
+  Button,
   Grid,
+  IconButton,
   Stack,
   Typography,
   createTheme,
@@ -10,6 +12,9 @@ import DataGrid, { DataGridColumn, DataGridRefreshRate } from "../../components/
 import { useGetExecutionQuery, ExecutionsParams, useGetScannedURLsQuery } from "../../common/api";
 import { SearchCard } from "../../components/SearchCard";
 import { PlatformKind, PlatformKindIcon } from "../../components/PlatformKindIcon";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 
 type ScannedURLInfo = {
@@ -70,20 +75,50 @@ export default function SearchPage() {
     { key: 'batch_uuid', header: 'Batch UUID' },
     { key: 'scan_uuid', header: 'scan UUID' },
     { key: 'insert_time', header: 'Upload Time' },
-    { key: 'label', header: 'Label' }
+    { 
+      key: 'label', 
+      header: 'Label',
+      cell: ({ cellValue, row }) => (
+        <Button variant="outlined" sx={{ textTransform: 'none' }} style={{ backgroundColor: row.original.label === "Benign" ? '#316b5f' : row.original.label === 'Malicious' ? '#653846' : '#b8b8b8', color: 'white', borderRadius: '20px' }}>
+          {row.original.label}
+        </Button>
+      )
+     },
+     {
+      key: 'inference', // Unique key for the new column
+      header: 'Inference', // No header for the redirect icon column
+      cell: ({ row }) => {
+          const navigate = useNavigate();
+
+          const handleRedirect = () => {
+              navigate(`/inference/${row.original.batch_uuid}`);
+          };
+
+          return (
+              <IconButton onClick={handleRedirect}>
+                  <ArrowForwardIcon />
+              </IconButton>
+          );
+      },
+    }
   ]
 
   // TODO ask ohad how to properly pass/use "refreshInterval" so it will change here as user click
   const { data, isLoading } = useGetScannedURLsQuery<ScannedURLInfo[]>({});
+  const [filteredData, setFilteredData] = useState<ScannedURLInfo[]>({});
+
+  const receiveDataFromChild = (data) => {
+    console.log(data);
+    setFilteredData(data);
+  };
+  
   return (
     <Box sx={{ m: 5 }}>
       <Grid item sx={{ mt: 1, position: 'relative' }} spacing={3}>
-          <SearchCard disabled={false} placeholder="Enter URL ..." onURLSubmit={() => { }}
-
-          />
+          <SearchCard disabled={false} placeholder="Enter URL ..." onURLSubmit={() => { }} sendFilteredData={receiveDataFromChild}/>
       </Grid>
       <Grid item  sx={{ mt: 5, position: 'relative' }}>
-        <DataGrid<ScannedURLInfo> theme={dataGridTheme} columns={columns} data={data} isLoading={isLoading} title="All Scanned URLs" />
+        <DataGrid<ScannedURLInfo> theme={dataGridTheme} columns={columns} data={data} isLoading={isLoading} title="All Scanned URLs"/>
       </Grid>
 
 

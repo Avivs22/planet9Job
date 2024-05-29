@@ -1,0 +1,13 @@
+.redirect-container {
+    background-color: #13293c;
+    color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 100%;
+    padding-left: 100px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+}

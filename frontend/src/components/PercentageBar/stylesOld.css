@@ -1,0 +1,94 @@
+.progress-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    height: 30px;
+    width: 600px;
+    border: 2px solid white;
+    border-radius: 15px;
+    /* Adjust height as needed */
+}
+
+.progress-bar-part {
+    position: relative;
+    height: 100%;
+    border-right: 2px solid white;
+    border-radius: 15px;
+}
+
+.progress-bar-part:last-child {
+    border-right: none;
+    border-radius: 0 15px 15px 0;
+    /* Remove border from the last part */
+}
+
+.label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.circle {
+    width: 20px;
+    /* Adjust size as needed */
+    height: 20px;
+    /* Adjust size as needed */
+    border-radius: 50%;
+    margin-bottom: 5px;
+}
+
+.red {
+    background-color: red;
+}
+
+.blue {
+    background-color: blue;
+}
+
+.black {
+    background-color: black;
+}
+
+
+
+/* Custom styles for inference progress bar */
+.benign {
+    background-color: #13c41f;
+    width: 13%;
+}
+
+.malicious {
+    background-color: #bc0000;
+    width: 37%;
+}
+
+.url-ood {
+    background-color: #8a8a25;
+    width: 30%;
+}
+
+.not-inferenced {
+    background-color: #515151;
+    width: 20%;
+}
+
+/* Custom styles for enticement progress bar */
+.gaming-streaming {
+    background-color: #1e3a8a;
+    width: 37%;
+}
+
+.job-scam {
+    background-color: #f97316;
+    width: 20%;
+}
+
+.adult-content {
+    background-color: #8b5cf6;
+    width: 30%;
+}
+
+.romance-scam {
+    background-color: #e11d48;
+    width: 20%;
+}

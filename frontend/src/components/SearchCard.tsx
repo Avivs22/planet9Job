@@ -6,6 +6,7 @@ import { ViewCsvSearchDialog } from "../dialogs/ViewCsvSearch";
 import { ViewSearchDialog } from "../dialogs/ViewSearch";
 import { ModelType } from "../state/ui";
 import sortIcon from '../assets/icons/sort-az.svg'
+import { useGetFilteredDataQuery } from "../common/api";
 
 
 
@@ -94,11 +95,13 @@ export interface SearchCardModelProps {
   onFileSubmit?: (file: File) => void
   submitIcon?: ReactNode;
   leftAction?: ReactNode;
+  sendFilteredData?: (data: any) => void;
 }
 
 
 export function SearchCard(props: SearchCardModelProps) {
   const [inputValue, setInputValue] = useState<string>("");
+  const [searchValue, setSearchValue] = useState<string>("");
   const [file, setFile] = useState<File>();
   const [isShowDialog, setIsShowDialog] = useState(false);
   const [isShowCsvUploadDialog, setIsShowCsvUploadDialog] = useState(false);
@@ -115,6 +118,12 @@ export function SearchCard(props: SearchCardModelProps) {
   const onUpload = () => {
     file && props.onFileSubmit ? setIsShowCsvUploadDialog(true) : setIsShowDialog(true);
   }
+
+  
+  const onFilter = () => {
+    const { data, isLoading } = useGetFilteredDataQuery(searchValue);
+    sendFilteredData(data);
+  };
 
   const dropFunc = (file: File | undefined) => {
     if (file && file.type === "text/csv" && props.onFileSubmit) {
@@ -152,7 +161,7 @@ export function SearchCard(props: SearchCardModelProps) {
               fullWidth
               value={inputValue ? inputValue : ''}
               onChange={(e) => {
-                setInputValue(e.target.value)
+                props.submitIcon === undefined ? setSearchValue(e.target.value) : setInputValue(e.target.value)
               }}
               onKeyPress={handleKeyPress}
               InputProps={{
@@ -167,7 +176,9 @@ export function SearchCard(props: SearchCardModelProps) {
                   <InputAdornment position="end">
                     <IconButton
                       disabled={props.disabled}
-                      onClick={() => onUpload()}
+                      onClick={() => {
+                        props.submitIcon ? onUpload() : onFilter()
+                      }}
                       sx={{
                         backgroundColor: '#ffffffcc',
                         '& .MuiSvgIcon-root': {

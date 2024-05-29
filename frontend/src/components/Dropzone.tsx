@@ -3,6 +3,8 @@ import { useDropzone } from "react-dropzone";
 import { CSSProperties } from "react";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 import CloseIcon from "@mui/icons-material/Close"; // Import Close (X) icon from MUI
+import { Button } from "@mui/material";
+import { Download } from "@mui/icons-material";
 
 const baseStyle: CSSProperties = {
   display: "flex",
@@ -20,6 +22,7 @@ const baseStyle: CSSProperties = {
   transition: "border .24s ease-in-out",
   cursor: "pointer",
   width: "100%",
+  flexGrow: 1,
 };
 
 const activeStyle = {
@@ -32,6 +35,29 @@ const acceptStyle = {
 
 const rejectStyle = {
   borderColor: "#ff1744",
+};
+
+const downloadSampleContainerStyle = {
+  padding: "10px",
+  marginRight: "10px", 
+  display: 'flex',
+  flexDirection: 'column', 
+  alignItems: 'center',
+  justifyContent: 'center',
+  border: "1px solid #ccc", 
+  borderWidth: 2,
+  borderRadius: "8px",
+  backgroundColor: "rgba(128, 128, 128, 0.5)",
+  color: 'white'
+};
+
+const handleDownload = () => {
+  const link = document.createElement('a');
+  link.href = '/sample.csv'; // Adjust the path based on your file location
+  link.setAttribute('download', 'sample.csv'); // The name for the downloaded file
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 };
 
 export interface DropzoneProps {
@@ -79,27 +105,33 @@ function Dropzone(props: DropzoneProps) {
   }, [file]);
 
   return (
-    <div {...getRootProps({ style })}>
-      <input {...getInputProps()} />
+    <div style={{ display: "flex", flexGrow: 1 }}>
+      <Button style={downloadSampleContainerStyle} onClick={handleDownload}>
+        Download CSV sample
+        <Download />
+      </Button>
+      <div {...getRootProps({ style })}>
+        <input {...getInputProps()} />
 
-      {file ? (
-        <aside>
-          <InsertDriveFileIcon
-            style={{ marginRight: "7px", verticalAlign: "-5px" }}
-          />
-          {file.name} - {file.size} bytes
-          <CloseIcon
-            onClick={removeFile}
-            style={{
-              marginLeft: "10px",
-              verticalAlign: "2px",
-              cursor: "pointer",
-            }}
-          />
-        </aside>
-      ) : (
-        <p>Drag & drop a file here, or click to select a file</p>
-      )}
+        {file ? (
+          <aside>
+            <InsertDriveFileIcon
+              style={{ marginRight: "7px", verticalAlign: "-5px" }}
+            />
+            {file.name} - {file.size} bytes
+            <CloseIcon
+              onClick={removeFile}
+              style={{
+                marginLeft: "10px",
+                verticalAlign: "2px",
+                cursor: "pointer",
+              }}
+            />
+          </aside>
+        ) : (
+          <p>Drag & drop a file here, or click to select a file</p>
+        )}
+      </div>
     </div>
   );
 }

@@ -22,6 +22,9 @@ import LogoutPage from "./pages/Logout.tsx";
 
 import { DashboardIndexPage } from "./pages/DashboardIndex.tsx";
 import SearchPage from "./pages/Search/index.tsx";
+import InferencePage from "./pages/Inference/index.tsx";
+import AnalysisPage from "./pages/Analysis/index.tsx";
+
 
 const queryClient = new QueryClient();
 
@@ -46,6 +49,15 @@ const router = createBrowserRouter([
         path: "/search",
         element: <SearchPage />,
       },
+      {
+        path: "/inference/:batch_uuid",
+        element: <InferencePage />,
+      },
+      {
+        path: "/analysis/:scan_uuid/:enviroment", 
+        element: <AnalysisPage />,
+      },
+      
      ]
   },
   {

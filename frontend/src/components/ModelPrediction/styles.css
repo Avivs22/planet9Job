@@ -1,0 +1,56 @@
+/* src/StatusCard.css */
+.status-card {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #2f3b4a;
+    padding: 20px;
+    border-radius: 10px;
+    height: 80px;
+    width: 50%;
+    align-self: flex-end;
+    margin-top: "100px";
+}
+
+.status-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: space-between;
+    text-align: center;
+    color: white;
+    width: 250px;
+    height: 80px;
+    border-radius: 10px;
+    background-image: linear-gradient(to bottom, #8f9ca6, #45525a);
+}
+
+.label {
+    display: block;
+    font-size: 12px;
+    color: "white";
+}
+
+.value {
+    display: block;
+    font-size: 20px;
+    margin: 5px 0;
+}
+
+.probability {
+    display: block;
+    font-size: 12px;
+    color: #b0b0b0;
+}
+
+.benign {
+    color: #56ccf2;
+}
+
+.not-ood {
+    color: #f2994a;
+}
+
+.job-scam {
+    color: #ffffff;
+}

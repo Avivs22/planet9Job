@@ -46,6 +46,18 @@ const SIDEBAR_ITEMS: SidebarItemGroup[] = [
         path: "/search",
 
       },
+      {
+        title: "Inference",
+        icon: ManageSearchOutlined,
+        path: "/inference",
+
+      },
+      {
+        title: "Analysis",
+        icon: ManageSearchOutlined,
+        path: "/analysis",
+
+      },
     ],
   },
   {

@@ -1,4 +1,4 @@
-import { useQuery,UseQueryResult } from "react-query";
+import { useQuery, UseQueryResult } from "react-query";
 import axios from "axios";
 import {
   Case,
@@ -39,11 +39,134 @@ export function useGetExecutionQuery<T>(params: ExecutionsParams) {
   });
 }
 
+
+export interface ScanDetailsInfoParams {
+  scan_uuid: string;
+  enviroment: string;
+}
+
+export function useGetScanDetailsInfoQuery<T>(params: ScanDetailsInfoParams) {
+  return useQuery(['data', params], async () => {
+    return (await axios.get('http://localhost:8000/api/analysis/scan/get_submitted_info', { params })).data as unknown as T;
+  }, {
+    // refetchInterval: params.refreshInterval
+  });
+}
+
+
+
+export interface RedirectInfoParams {
+  scan_uuid: string;
+  enviroment: string;
+}
+
+export function useGetRedirectInfoQuery<T>(params: RedirectInfoParams) {
+  return useQuery(['data', params], async () => {
+    return (await axios.get('http://localhost:8000/api/analysis/scan/get_redirection', { params })).data as unknown as T;
+  }, {
+    // refetchInterval: params.refreshInterval
+  });
+}
+
+
+
+export interface BatchStatusInfoParams {
+  batch_uuid: string;
+}
+
+export function useGetBatchStatusInfoQuery<T>(params: BatchStatusInfoParams) {
+  return useQuery(['data', params], async () => {
+    return (await axios.get('http://localhost:8000/api/get_batch_status/url_status', { params })).data as unknown as T;
+  }, {
+    // refetchInterval: params.refreshInterval
+  });
+}
+
+export interface BatchInferenceInfoParams {
+  batch_uuid: string;
+  enviroment: string;
+}
+
+export function useGetBatchInferenceInfoQuery<T>(params: BatchInferenceInfoParams) {
+  return useQuery(['data1', params], async () => {
+    return (await axios.get('http://localhost:8000/api/get_batch_status/urls_inference', { params })).data as unknown as T;
+  }, {
+    // refetchInterval: params.refreshInterval
+  });
+}
+
+
+export interface BatchOODInfoParams {
+  batch_uuid: string;
+}
+
+export function useGetBatchOodInfoQuery<T>(params: BatchOODInfoParams) {
+  return useQuery(['data2', params], async () => {
+    return (await axios.get('http://localhost:8000/api/get_batch_status/urls_ood', { params })).data as unknown as T;
+  }, {
+    // refetchInterval: params.refreshInterval
+  });
+}
+
+
+export interface BatchEnticementInfoParams {
+  batch_uuid: string;
+}
+
+export function useGetBatchEnticementInfoQuery<T>(params: BatchEnticementInfoParams) {
+  return useQuery(['data3', params], async () => {
+    return (await axios.get('http://localhost:8000/api/get_batch_status/urls_enticement', { params })).data as unknown as T;
+  }, {
+    // refetchInterval: params.refreshInterval
+  });
+}
+
+
+export interface ModelPredictionInfoParams {
+  scan_uuid: string;
+}
+
+export function useGetModelPredictionInfoQuery<T>(params: ModelPredictionInfoParams) {
+  return useQuery(['data1', params], async () => {
+    return (await axios.get('http://localhost:8000/api/analysis/scan/get_model_prediction_per_device', { params })).data as unknown as T;
+  }, {
+    // refetchInterval: params.refreshInterval
+  });
+}
+
+
+export interface FilterURLInfoParams {
+  filter_object: string;
+}
+
+export function useGetFilteredDataQuery<T>(params: FilterURLInfoParams) {
+  return useQuery(['data1', params], async () => {
+    return (await axios.get('http://localhost:8000/api/filtered_scanned_urls', { params })).data as unknown as T;
+  }, {
+    // refetchInterval: params.refreshInterval
+  });
+}
+
+
+
 export interface ScannedURLsParams {
 }
 export function useGetScannedURLsQuery<T>(params: ScannedURLsParams) {
   return useQuery(['data', params], async () => {
     return (await axios.get('http://localhost:8000/api/all_scanned_urls', { params })).data as unknown as T;
+  }, {
+    // refetchInterval: params.refreshInterval
+  });
+}
+
+export interface BatchInfoParams {
+  batch_uuid: string;
+}
+export function useGetBatchInfoQuery<T>(params: BatchInfoParams) {
+  // Ensure download_mode is set to false
+  const requestParams = { ...params, download_mode: true };
+  return useQuery(['data4', params], async () => {
+    return (await axios.get('http://localhost:8000/api/get_batch_items', { params: requestParams })).data as unknown as T;
   }, {
     // refetchInterval: params.refreshInterval
   });
