@@ -77,7 +77,8 @@ const InferencePage: React.FC = () => {
                      '#647284',
                     color: 'white',
                     borderRadius: '20px', 
-                    textTransform: 'none' 
+                    textTransform: 'none',
+                    width:"10rem"
                   
                   }}>
                   {row.original.status}
@@ -97,7 +98,8 @@ const InferencePage: React.FC = () => {
                     '#647284', 
                     color: 'white', 
                     borderRadius: '20px', 
-                    textTransform: 'none' 
+                    textTransform: 'none',
+                    width:"10rem"
                   }}>
                   {row.original.ood_classification}
                 </Button>
@@ -118,7 +120,8 @@ const InferencePage: React.FC = () => {
                     '#71725f', 
                     color: 'white', 
                     borderRadius: '20px', 
-                    textTransform: 'none' 
+                    textTransform: 'none',
+                    width:"10rem"
                   }}>
                   {row.original.scams_classification}
                 </Button>
@@ -143,7 +146,8 @@ const InferencePage: React.FC = () => {
                     '#647284', 
                     color: 'white', 
                     borderRadius: '20px', 
-                    textTransform: 'none' 
+                    textTransform: 'none',
+                    width:"14rem"
                   }}>
                   {row.original.enticement_method_classification}
                 </Button>
@@ -157,7 +161,7 @@ const InferencePage: React.FC = () => {
           cell: ({ cellValue, row }) => {
             const navigate = useNavigate();
             const handleRedirect = () => {
-              navigate(`/analysis/${row.original.scan_uuid}/${row.device}`);
+              navigate(`/analysis/${row.original.scan_uuid}/${row.original.device}`);
             };
             return (
               <Button onClick={handleRedirect} variant="outlined" style={{ textTransform: 'none', backgroundColor: row.original.label === "Benign" ? 'blue' : row.original.label === 'Malicious' ? 'purple' : 'black', color: 'white', borderRadius: '20px' }}>

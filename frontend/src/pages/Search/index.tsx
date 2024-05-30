@@ -79,7 +79,7 @@ export default function SearchPage() {
       key: 'label', 
       header: 'Label',
       cell: ({ cellValue, row }) => (
-        <Button variant="outlined" sx={{ textTransform: 'none' }} style={{ backgroundColor: row.original.label === "Benign" ? '#316b5f' : row.original.label === 'Malicious' ? '#653846' : '#b8b8b8', color: 'white', borderRadius: '20px' }}>
+        <Button variant="outlined" sx={{ textTransform: 'none' }} style={{ backgroundColor: row.original.label === "Benign" ? '#316b5f' : row.original.label === 'Malicious' ? '#653846' : '#b8b8b8', color: 'white', borderRadius: '20px',width:"10rem" }}>
           {row.original.label}
         </Button>
       )

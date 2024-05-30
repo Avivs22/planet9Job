@@ -13,24 +13,25 @@ type ScanDetailsInfo = {
     enviroment: string;
 };
 
-interface ScanDetailsComponentParams {
+type ScanDetailsComponentParams = {
     scan_uuid: string;
     enviroment: string;
 }
 
 const ScanDetails = () => { 
       const { scan_uuid, enviroment } = useParams<ScanDetailsComponentParams>();
+      const { data, isLoading } = useGetScanDetailsInfoQuery<ScanDetailsInfo>({ scan_uuid, enviroment });
 
-      // TODO ask ohad how to properly pass/use "refreshInterval" so it will change here as user click
-      const { data, isLoading } = useGetScanDetailsInfoQuery<ScanDetailsInfo[]>({ scan_uuid, enviroment });
-      
+      if (isLoading) {
+        return <Typography>Loading...</Typography>;
+    }
       return (
         // <Box sx={{ m: 5 }}>
         <div className="scan-info">
             <h1 className="url">{data?.url}</h1>
             <div className="details">
-                <div className="detail">Scan Date – {data?.raw_input}</div>
-                <div className="detail">Scan_UUID – {data?.enviroment}</div>
+                <div className="detail">Scan Date – {data?.date}</div>
+                <div className="detail">Scan_UUID – {data?.scan_uuid}</div>
                 <div className="detail">
                 <div className='icon'>
                     <PlatformKindIcon platform="desktop"/> 

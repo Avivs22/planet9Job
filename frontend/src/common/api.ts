@@ -41,8 +41,8 @@ export function useGetExecutionQuery<T>(params: ExecutionsParams) {
 
 
 export interface ScanDetailsInfoParams {
-  scan_uuid: string;
-  enviroment: string;
+  scan_uuid?: string;
+  enviroment?: string;
 }
 
 export function useGetScanDetailsInfoQuery<T>(params: ScanDetailsInfoParams) {
@@ -56,8 +56,8 @@ export function useGetScanDetailsInfoQuery<T>(params: ScanDetailsInfoParams) {
 
 
 export interface RedirectInfoParams {
-  scan_uuid: string;
-  enviroment: string;
+  scan_uuid?: string;
+  enviroment?: string;
 }
 
 export function useGetRedirectInfoQuery<T>(params: RedirectInfoParams) {
@@ -123,7 +123,8 @@ export function useGetBatchEnticementInfoQuery<T>(params: BatchEnticementInfoPar
 
 
 export interface ModelPredictionInfoParams {
-  scan_uuid: string;
+  scan_uuid?: string;
+  enviroment?:string;
 }
 
 export function useGetModelPredictionInfoQuery<T>(params: ModelPredictionInfoParams) {

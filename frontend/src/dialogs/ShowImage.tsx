@@ -14,6 +14,8 @@ export function ShowImageDialog(props: ShowImageDialogProps) {
         style={{
           backgroundColor: "black",
           position: "relative",
+          height: "20rem",
+          width: "20rem"
         }}
       >
         <img

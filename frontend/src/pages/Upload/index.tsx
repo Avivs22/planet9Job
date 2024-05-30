@@ -86,7 +86,7 @@ export default function UploadPage() {
       key: 'single_or_batch', 
       header: 'Single/Batch', 
       cell: (row: any) => (
-        <Button variant="outlined" style={{ backgroundColor: row.row.original.batch_size > 1 ? '#6ab4ff' : '#bfa8ff', color: 'white', borderRadius: '20px' }}>
+        <Button variant="outlined" style={{ backgroundColor: row.row.original.batch_size > 1 ? '#6ab4ff' : '#bfa8ff', color: 'white', borderRadius: '20px',width:"10rem" }}>
           {row.row.original.batch_size > 1 ? 'Batch' : 'Single URL'}
         </Button>
       )

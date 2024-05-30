@@ -305,3 +305,7 @@ export function useRawJsonQuery(params: GetBaseQueryParams, enabled: boolean) {
     },
   );
 }
+export const retriveModelInferenceDataElement = (device:string,scan_uuid:string)=>{
+  
+  return undefined
+}

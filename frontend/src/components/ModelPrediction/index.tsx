@@ -21,13 +21,14 @@ type ModelPredictionInfo = {
   };
 };
 
-interface ModelPredictionComponentParams {
-  batch_uuid: string;
+type ModelPredictionComponentParams = {
+  scan_uuid: string;
+  enviroment:string;
 }
 
 const ModelPrediction = () => {
   const { scan_uuid, enviroment } = useParams<ModelPredictionComponentParams>();
-  const { data } = useGetModelPredictionInfoQuery<ModelPredictionInfo[]>({ scan_uuid, enviroment });
+  const { data } = useGetModelPredictionInfoQuery<ModelPredictionInfo>({ scan_uuid, enviroment });
   console.log(data)
   return (
     <div className="status-card">

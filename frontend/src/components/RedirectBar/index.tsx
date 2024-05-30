@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './styles.css';
-import { Button, Grid, Typography } from '@mui/material';
-import { ArrowForward, Download } from '@mui/icons-material';
+import { Button, Typography } from '@mui/material';
+import { ArrowForward } from '@mui/icons-material';
 import { useParams } from 'react-router-dom';
 import { useGetRedirectInfoQuery } from '../../common/api';
 import CountryFlag from '../CountryFlag';
+import { clickedButtonIndexAtom } from '../../common/state';
+import { useAtomValue, useSetAtom } from 'jotai';
 
 const redirectButtonStyle = {
     padding: "10px",
@@ -31,46 +33,51 @@ const redirectButtonStyleClicked = {
 
 type RedirectInfo = {
     url: string;
-    raw_input: string;
-    scan_uuid: string;
     enviroment: string;
+    depth: number;
+    idx: number;
+    reason: number;
+    ip: string;
 };
 
-interface RedirectBarComponentParams {
+type RedirectBarComponentParams = {
     scan_uuid: string;
     enviroment: string;
 }
 
-const RedirectBar = () => {
+const RedirectBar: React.FC = () => {
     const { scan_uuid, enviroment } = useParams<RedirectBarComponentParams>();
-
-    // TODO ask ohad how to properly pass/use "refreshInterval" so it will change here as user click
     const { data, isLoading } = useGetRedirectInfoQuery<RedirectInfo[]>({ scan_uuid, enviroment });
-    
-    const [isClicked, setIsClicked] = useState([false, false]);
+    console.log(isLoading)
+    console.log(data)
+    const clickedIndex = useAtomValue(clickedButtonIndexAtom);
+    const setClickedIndex = useSetAtom(clickedButtonIndexAtom);
+
+    if (isLoading) {
+        return <Typography>Loading...</Typography>
+    }
 
     const handleButtonClick = (index: number) => {
-        setIsClicked(prevState => {
-            const newState = [...prevState];
-            newState[index] = !newState[index];
-            return newState;
-        });
+        setClickedIndex(index);
     };
 
-
-  return (
-    <div className="redirect-container">
-        <Button sx={{ textTransform: 'none' }} style={isClicked[0] ? redirectButtonStyleClicked : redirectButtonStyle} onClick={() => handleButtonClick(0)}>
-            <span>https://facebook.com</span>
-            <CountryFlag ip='214.153.8.0'/>
-        </Button>
-        <ArrowForward style={{ marginRight: '10px' }} />
-        <Button sx={{ textTransform: 'none' }} style={isClicked[1] ? redirectButtonStyleClicked : redirectButtonStyle} onClick={() => handleButtonClick(1)}>
-            <span>https://facebook.com</span>
-            <CountryFlag ip='214.153.8.0'/>
-        </Button>
-    </div>
-  );
+    return (
+        <div className="redirect-container">
+            {data && data.map((item, index) => (
+                <React.Fragment key={index}>
+                    <Button
+                        sx={{ textTransform: 'none' }}
+                        style={index === clickedIndex ? redirectButtonStyleClicked : redirectButtonStyle}
+                        onClick={() => handleButtonClick(index)}
+                    >
+                        <span>{item.url}</span>
+                        <CountryFlag ip='214.153.8.0'/>
+                    </Button>
+                    {index !== data.length - 1 && <ArrowForward style={{ marginRight: '10px' }} />} {/* Add ArrowForward except for the last item */}
+                </React.Fragment>
+            ))}
+        </div>
+    );
 };
 
 export default RedirectBar;
