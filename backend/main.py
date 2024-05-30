@@ -472,7 +472,7 @@ async def get_sceenshot_per_device(
         scan_uuid: str, enviroment: str, redictrion_idx: int, depth: int
 ) -> Optional[Dict]:
     return {
-        "s3": "s3://ronentest2/year=2024/month=3/day=3/uuid=13b62216_7f53_4a40_b083_998b003f1a2a/context=iphone/depth=0/page_uuid=fc806d2b_100e_46e2_8035_47562036a2b3/screenshot.png"
+        "s3": "sample.png"
     }
 
 
