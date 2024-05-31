@@ -1,0 +1,8 @@
+:root {
+    --toastify-color-success: linear-gradient(to right, #6ab4ff, #c2a6ff);
+    --toastify-icon-color-success:  #c2a6ff !important
+  }
+
+body .MuiPaper-root {
+    border: 0;
+  }

@@ -1,0 +1,15 @@
+.redirect-container {
+    background-color: #13293c;
+    color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    width:92%;
+    height:100%;
+    margin-left: 2.5rem;
+    overflow-x: auto; /* Enable horizontal scrolling */
+    white-space: nowrap; /* Prevent items from wrapping to the next line */
+    display: flex;
+    align-items: center;
+}
+
+
