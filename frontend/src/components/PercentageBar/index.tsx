@@ -10,7 +10,7 @@ const PercentageBar = () => {
 
   return (
     <div className="progress-container">
-      <Grid container spacing={2}>
+      <Grid container spacing={15}>
         <Status />      
         <Inference />
         <OOD />
