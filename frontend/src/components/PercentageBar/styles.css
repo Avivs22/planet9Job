@@ -28,6 +28,7 @@
     justify-content: center;
     color: white;
     font-size: 12px;
+    font-family: 'Courier New', Courier, monospace;
 }
 
 /* Different colors for status */
@@ -81,7 +82,7 @@
 .circle {
     width: 12px;
     height: 12px;
-    border-radius:6px;
+    border-radius:2rem;
     margin-right: 5px;
 }
 
@@ -118,35 +119,28 @@
 /* Custom styles for enticement progress bar */
 .gaming-streaming {
     background-color: #1e3a8a;
-    width: 37%;
 }
 
 .job-scam {
     background-color: #8b7463;
-    width: 20%;
 }
 
 .adult-content {
     background-color: #7c7097;
-    width: 30%;
 }
 
 .business-ecommerce {
     background-color: #63888b;
-    width: 30%;
 }
 
 .finance-banking {
     background-color: #7d5f72;
-    width: 30%;
 }
 
 .romance-scam {
     background-color: #e11d48;
-    width: 20%;
 }
 
 .other {
     background-color: #726f7a;
-    width: 20%;
 }

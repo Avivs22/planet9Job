@@ -1,14 +1,12 @@
 import React, { ReactNode, useState } from "react";
 import { Stack, Card, IconButton, InputAdornment, styled, TextField, Box, Grid, MenuItem, OutlinedInput, Select, Typography } from "@mui/material";
-import { Upload, Search } from "@mui/icons-material";
+import { Search } from "@mui/icons-material";
 import Dropzone from "./Dropzone";
 import { ViewCsvSearchDialog } from "../dialogs/ViewCsvSearch";
 import { ViewSearchDialog } from "../dialogs/ViewSearch";
 import { ModelType } from "../state/ui";
 import sortIcon from '../assets/icons/sort-az.svg'
 import { useGetFilteredDataQuery } from "../common/api";
-
-
 
 interface ModelSelectProps {
   value: ModelType;
@@ -38,25 +36,18 @@ function ModelSelect(props: ModelSelectProps) {
       sx={{
         backgroundColor: '#ffffff20', // match the color from your image
         borderRadius: 8,
-
         '&.MuiInputBase-root': {
           height: 64,
         },
-
         '& .MuiOutlinedInput-notchedOutline': {
           border: 'undefined',
         },
-
         '& .MuiSelect-select': {
-          // paddingLeft: '1em', // or any specific padding
           mr: 1,
         },
-
         '& .MuiSvgIcon-root': {
           right: 14,
         },
-
-        // add drop shadow
         boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
       }}
     >
@@ -66,8 +57,6 @@ function ModelSelect(props: ModelSelectProps) {
     </Select>
   );
 }
-
-
 
 export const SearchTextField = styled(TextField)({
   '& .MuiOutlinedInput-root': {
@@ -87,7 +76,6 @@ export const SearchTextField = styled(TextField)({
   }
 });
 
-
 export interface SearchCardModelProps {
   disabled?: boolean;
   placeholder?: string;
@@ -98,7 +86,6 @@ export interface SearchCardModelProps {
   sendFilteredData?: (data: any) => void;
 }
 
-
 export function SearchCard(props: SearchCardModelProps) {
   const [inputValue, setInputValue] = useState<string>("");
   const [searchValue, setSearchValue] = useState<string>("");
@@ -107,30 +94,33 @@ export function SearchCard(props: SearchCardModelProps) {
   const [isShowCsvUploadDialog, setIsShowCsvUploadDialog] = useState(false);
   const [modelType, setModelType] = useState<ModelType>(ModelType.CONTENT);
 
-
-
   const handleKeyPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Enter') {
-      onUpload()
+      onUpload();
     }
   }
 
   const onUpload = () => {
-    file && props.onFileSubmit ? setIsShowCsvUploadDialog(true) : setIsShowDialog(true);
+    if (file && props.onFileSubmit) {
+      setIsShowCsvUploadDialog(true);
+    } else {
+      setIsShowDialog(true);
+    }
   }
 
-  
   const onFilter = () => {
     const { data, isLoading } = useGetFilteredDataQuery(searchValue);
-    sendFilteredData(data);
+    if (props.sendFilteredData) {
+      props.sendFilteredData(data);
+    }
   };
 
   const dropFunc = (file: File | undefined) => {
     if (file && file.type === "text/csv" && props.onFileSubmit) {
-      setInputValue(file.name)
-      setFile(file)
+      setInputValue(file.name);
+      setFile(file);
     } else {
-      setInputValue("")
+      setInputValue("");
     }
   }
 
@@ -141,27 +131,22 @@ export function SearchCard(props: SearchCardModelProps) {
   );
 
   return (
-    <Box
-
-    >
-      <Card
-        sx={{
-          p: 3,
-          border: 'solid 2px #777',
-        }}
-      >
+    <Box>
+      <Card sx={{ p: 3, border: 'solid 2px #777' }}>
         <Stack direction="column" spacing={3}>
-
           <Stack direction="row" alignItems="center" spacing={3}>
-
-            {/* <ModelSelect value={modelType} onChange={(v) => setModelType(v)} /> */}
             <SearchTextField
               placeholder={props.placeholder}
               disabled={props.disabled}
               fullWidth
-              value={inputValue ? inputValue : ''}
+              value={inputValue}
               onChange={(e) => {
-                props.submitIcon === undefined ? setSearchValue(e.target.value) : setInputValue(e.target.value)
+                const value = e.target.value;
+                if (props.submitIcon === undefined) {
+                  setSearchValue(value);
+                } else {
+                  setInputValue(value);
+                }
               }}
               onKeyPress={handleKeyPress}
               InputProps={{
@@ -177,7 +162,11 @@ export function SearchCard(props: SearchCardModelProps) {
                     <IconButton
                       disabled={props.disabled}
                       onClick={() => {
-                        props.submitIcon ? onUpload() : onFilter()
+                        if (props.submitIcon) {
+                          onUpload();
+                        } else {
+                          onFilter();
+                        }
                       }}
                       sx={{
                         backgroundColor: '#ffffffcc',
@@ -185,24 +174,22 @@ export function SearchCard(props: SearchCardModelProps) {
                           marginLeft: 0,
                           color: 'black',
                         },
-
                         '&:hover': {
                           backgroundColor: '#ffffffdd',
                         }
                       }}
                     >
-
                       <IconWrapper>
                         {props.submitIcon ?? <Search />}
-                      </IconWrapper>                    </IconButton>
+                      </IconWrapper>
+                    </IconButton>
                   </InputAdornment>
                 )
               }}
             />
           </Stack>
           {props.onFileSubmit &&
-
-            <Stack direction="row" sx={{ height: '100px' }} >
+            <Stack direction="row" sx={{ height: '100px' }}>
               <Dropzone
                 onDrop={dropFunc}
                 isMultipleSelection={false}
@@ -211,25 +198,26 @@ export function SearchCard(props: SearchCardModelProps) {
             </Stack>
           }
         </Stack>
-
       </Card>
-      {isShowDialog && <Grid item xs={12}>
-        <ViewSearchDialog
-          open={isShowDialog}
-          onClose={() => { setIsShowDialog(false) }}
-          search={props.onURLSubmit}
-        />
-      </Grid>}
-      {isShowCsvUploadDialog && props.onFileSubmit && <Grid item xs={12}>
-        <ViewCsvSearchDialog
-          file={file}
-          open={isShowCsvUploadDialog}
-          onClose={() => { setIsShowCsvUploadDialog(false) }}
-          search={props.onFileSubmit}
-        />
-      </Grid>
-      }
+      {isShowDialog && (
+        <Grid item xs={12}>
+          <ViewSearchDialog
+            open={isShowDialog}
+            onClose={() => setIsShowDialog(false)}
+            search={props.onURLSubmit}
+          />
+        </Grid>
+      )}
+      {isShowCsvUploadDialog && props.onFileSubmit && (
+        <Grid item xs={12}>
+          <ViewCsvSearchDialog
+            file={file}
+            open={isShowCsvUploadDialog}
+            onClose={() => setIsShowCsvUploadDialog(false)}
+            search={props.onFileSubmit}
+          />
+        </Grid>
+      )}
     </Box>
   );
 }
-

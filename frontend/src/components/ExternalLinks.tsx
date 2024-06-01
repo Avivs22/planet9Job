@@ -4,8 +4,6 @@ import {
   Typography,} from "@mui/material";
 
 
-import { useSearchParams } from 'react-router-dom';
-
 import {  useQuery } from "react-query";
 import { useAtomValue,  } from "jotai";
 import { clickedButtonIndexAtom } from '../common/state';

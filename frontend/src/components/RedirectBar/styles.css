@@ -10,6 +10,18 @@
     white-space: nowrap; /* Prevent items from wrapping to the next line */
     display: flex;
     align-items: center;
+    scrollbar-width: thin;
+    scrollbar-color: white #13293c;
+}
+.redirect-container::-webkit-scrollbar {
+    height: 8px; /* Reduced height for a standard scrollbar size */
 }
 
+.redirect-container::-webkit-scrollbar-thumb {
+    background: white;
+    border-radius: 10px;
+}
 
+.redirect-container::-webkit-scrollbar-track {
+    background: #13293c; /* Match the container background */
+}

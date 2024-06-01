@@ -1,18 +1,15 @@
  import SamplePNG from "../../../backend/sample.png"
- import React, { useState, useEffect, } from 'react';
+ import { useState, useEffect, } from 'react';
  import { useAtomValue,atom } from 'jotai'
  import {
      Alert,
      Box,
      Card,
      CircularProgress,
-     Grid,
      IconButton,
-     Stack, SxProps,
-     Typography, CardProps,
+     Stack,
+     Typography,
    } from "@mui/material";
-   import {useScreenshotQuery} from '../../common/api/investigateApi.ts';
-   import { useNavigate, useLocation, useSearchParams } from 'react-router-dom';
    import { ShowImageDialog } from '../dialogs/ShowImage.tsx';
    import expandIcon from '../assets/icons/expand.svg';
 

@@ -1,10 +1,7 @@
-import React from 'react';
 import './styles.css';
-import { Grid, Typography } from '@mui/material';
+import { Grid, Typography,Tooltip } from '@mui/material';
 import { useParams } from 'react-router-dom';
-import { useGetBatchInferenceInfoQuery, useGetBatchOodInfoQuery, useGetBatchStatusInfoQuery } from '../../common/api';
-import Status from './status';
-
+import { useGetBatchOodInfoQuery } from '../../common/api';
 
 type BatchOODInfo = {
   not_ood: number;
@@ -40,22 +37,27 @@ const OOD = () => {
     console.log("Happy")
     console.log(oodData);
 
-  return (            
-    <Grid item xs={12} sm={6} >
-        <Typography>OOD</Typography>
+    return (
+      <Grid item xs={12} sm={6}>
+        <Typography sx={{ textAlign: "center" ,fontFamily:"'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif"}}>OOD</Typography>
         <div className="progress-bar">
-            <div className="progress-bar-part not-ood" style={{ width: `${notOodPercentage}%`}}>{notOodPercentage}%</div>
-            <div className="progress-bar-part ood" style={{ width: `${oodPercentage}%`}}>{oodPercentage}%</div>
-            <div className="progress-bar-part not-inferenced-yet" style={{ width: `${notInferencedYetPercentage}%`}}>{notInferencedYetPercentage}%</div>
+          <Tooltip title={`${notOodPercentage}%`} arrow>
+            <div className="progress-bar-part not-ood" style={{ width: `${notOodPercentage}%` }}>{notOodPercentage}%</div>
+          </Tooltip>
+          <Tooltip title={`${oodPercentage}%`} arrow>
+            <div className="progress-bar-part ood" style={{ width: `${oodPercentage}%` }}>{oodPercentage}%</div>
+          </Tooltip>
+          <Tooltip title={`${notInferencedYetPercentage}%`} arrow>
+            <div className="progress-bar-part not-inferenced-yet" style={{ width: `${notInferencedYetPercentage}%` }}>{notInferencedYetPercentage}%</div>
+          </Tooltip>
         </div>
         <div className="legend">
-            <div className="legend-item"><div className="circle not-ood"></div>Not OOD</div>
-            <div className="legend-item"><div className="circle ood"></div>OOD</div>
-            <div className="legend-item"><div className="circle not-inferenced-yet"></div>Not Inferenced Yet</div>
+          <div className="legend-item"><div className="circle not-ood"></div>Not OOD</div>
+          <div className="legend-item"><div className="circle ood"></div>OOD</div>
+          <div className="legend-item"><div className="circle not-inferenced-yet"></div>Not Inferenced Yet</div>
         </div>
-    </Grid>
-
-  );
+      </Grid>
+    );
 };
 
 export default OOD;

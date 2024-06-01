@@ -1,5 +1,4 @@
 // src/StatusCard.js
-import React from 'react';
 import './styles.css';
 import { useParams } from 'react-router-dom';
 import { useGetModelPredictionInfoQuery } from '../../common/api';

@@ -1,5 +1,4 @@
 import {
-
     MenuItem, Select,
     FormControl, SelectChangeEvent, ThemeProvider, Tooltip, Theme, Typography, IconButton,
 } from "@mui/material";
@@ -10,8 +9,6 @@ import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import Papa from 'papaparse'; 
 
 import { convertStrToMilliseconds } from "../common/utils.ts";
-import { useNavigate } from "react-router-dom";
-
 
 export interface DataGridColumn<T> {
     key: keyof T;

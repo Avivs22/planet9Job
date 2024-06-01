@@ -168,8 +168,9 @@ export default function UploadPage() {
   // };
 
   // TODO ask ohad how to properly pass/use "refreshInterval" so it will change here as user click
-  const { data, isLoading } = useGetExecutionQuery<ExecutionInfo[]>({ refreshInterval: 5000 } as ExecutionsParams);
+  const { data, isLoading } = useGetExecutionQuery<ExecutionInfo[]>({ refreshInterval: 50000 } as ExecutionsParams);
   // console.log(data)
+  console.log(refreshRates)
   return (
     <Box sx={{ m: 5 }}>
       <Grid container sx={{ mt: 1, position: 'relative' }} spacing={3}>

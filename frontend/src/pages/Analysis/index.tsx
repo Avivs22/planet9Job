@@ -1,8 +1,4 @@
 
-import PercentageBar from "../../components/PercentageBar";
-import DataGrid, { DataGridColumn } from "../../components/DataGrid";
-import { useGetBatchInfoQuery } from "../../common/api";
-import { PlatformKindIcon } from "../../components/PlatformKindIcon";
 import { useParams } from 'react-router-dom';
 import ScanDetails from "../../components/ScanDetails";
 import ModelPrediction from "../../components/ModelPrediction";
@@ -20,7 +16,6 @@ type AnalysisParams =  {
   enviroment?: string;
 };
 
-import { useAtomValue } from 'jotai'
 import {   Box,
   } from "@mui/material";
 
@@ -45,10 +40,24 @@ const AnalysisPage: React.FC = () => {
                 <ScreenShotCard />
             </Box>
 
-            <div>
-                <h1>Sunburst Chart Example</h1>
+            <Box sx={{ m: 5 }} style={{ display: 'flex', flexDirection: 'column',gap:"20px"}}>
+            <h1 style={{
+                 color: "white",
+                fontSize: "3rem",
+                border: "2px solid white",
+                padding: "10px 20px",
+                borderRadius: "15px",
+                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)",
+                background: "linear-gradient(45deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0))",
+                textAlign: "center",
+                margin: "20px 0",
+                fontFamily: "'Roboto', sans-serif",
+                fontWeight: "bold"
+            }}>
+      Explainability
+    </h1>
                 <SunburstChartComponent />
-            </div>
+            </Box>
             {/* <SunburstChart
                 sampleIdx={0} // Index of the sample to visualize
                 countBy="size" // Property to count by

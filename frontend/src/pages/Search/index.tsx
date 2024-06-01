@@ -63,7 +63,7 @@ export default function SearchPage() {
 
   const columns: DataGridColumn<ScannedURLInfo>[] = [
     {
-      key: 'device', header: 'Device',size:1, cell: ({ cellValue,row }) => {
+      key: 'device', header: 'Device',size:50, cell: ({ cellValue,row }) => {
 
         return <PlatformKindIcon platform={row.original.device}/> ;
       }
@@ -102,10 +102,9 @@ export default function SearchPage() {
 
   // TODO ask ohad how to properly pass/use "refreshInterval" so it will change here as user click
   const { data, isLoading } = useGetScannedURLsQuery<ScannedURLInfo[]>({});
-  const [filteredData, setFilteredData] = useState<ScannedURLInfo[]>({});
+  const [filteredData, setFilteredData] = useState<ScannedURLInfo[]>();
 
-  const receiveDataFromChild = (data) => {
-    console.log(data);
+  const receiveDataFromChild = (data:any) => {
     setFilteredData(data);
   };
   
@@ -117,7 +116,6 @@ export default function SearchPage() {
       <Grid item  sx={{ mt: 5, position: 'relative' }}>
         <DataGrid<ScannedURLInfo> theme={dataGridTheme} columns={columns} data={data} isLoading={isLoading} title="All Scanned URLs"/>
       </Grid>
-
 
     </Box>
   );

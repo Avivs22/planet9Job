@@ -1,10 +1,7 @@
-import React from 'react';
 import './styles.css';
-import { Grid, Typography } from '@mui/material';
+import { Grid, Typography,Tooltip } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { useGetBatchInferenceInfoQuery, useGetBatchStatusInfoQuery } from '../../common/api';
-import Status from './status';
-
 
 type BatchInferenceInfo = {
   benign: number;
@@ -42,24 +39,31 @@ const Inference = () => {
 
     console.log(totalInference);
 
-  return (            
-    <Grid item xs={12} sm={6} >
-        <Typography>Inference</Typography>
+    return (
+      <Grid item xs={12} sm={6}>
+        <Typography sx={{ textAlign: "center" , fontFamily:"'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif"}}>Inference</Typography>
         <div className="progress-bar">
-            <div className="progress-bar-part benign" style={{ width: `${benignPercentage}%`}}>{benignPercentage}%</div>
-            <div className="progress-bar-part malicious" style={{ width: `${maliciousPercentage}%`}}>{maliciousPercentage}%</div>
-            <div className="progress-bar-part url-ood" style={{ width: `${urlInOODPercentage}%`}}>{urlInOODPercentage}%</div>
-            <div className="progress-bar-part not-started-yet" style={{ width: `${notInferencedYetPercentage}%`}}>{notInferencedYetPercentage}%</div>
+          <Tooltip title={`${benignPercentage}%`} arrow>
+            <div className="progress-bar-part benign" style={{ width: `${benignPercentage}%` }}>{benignPercentage}%</div>
+          </Tooltip>
+          <Tooltip title={`${maliciousPercentage}%`} arrow>
+            <div className="progress-bar-part malicious" style={{ width: `${maliciousPercentage}%` }}>{maliciousPercentage}%</div>
+          </Tooltip>
+          <Tooltip title={`${urlInOODPercentage}%`} arrow>
+            <div className="progress-bar-part url-ood" style={{ width: `${urlInOODPercentage}%` }}>{urlInOODPercentage}%</div>
+          </Tooltip>
+          <Tooltip title={`${notInferencedYetPercentage}%`} arrow>
+            <div className="progress-bar-part not-started-yet" style={{ width: `${notInferencedYetPercentage}%` }}>{notInferencedYetPercentage}%</div>
+          </Tooltip>
         </div>
         <div className="legend">
-            <div className="legend-item"><div className="circle benign"></div>Benign</div>
-            <div className="legend-item"><div className="circle malicious"></div>Malicious</div>
-            <div className="legend-item"><div className="circle url-ood"></div>URL in OOD</div>
-            <div className="legend-item"><div className="circle not-started-yet"></div>Not Inferenced Yet</div>
+          <div className="legend-item"><div className="circle benign"></div>Benign</div>
+          <div className="legend-item"><div className="circle malicious"></div>Malicious</div>
+          <div className="legend-item"><div className="circle url-ood"></div>URL in OOD</div>
+          <div className="legend-item"><div className="circle not-started-yet"></div>Not Inferenced Yet</div>
         </div>
-    </Grid>
-
-  );
+      </Grid>
+    );
 };
 
 export default Inference;

@@ -57,7 +57,7 @@ const InferencePage: React.FC = () => {
       });
       const columns: DataGridColumn<BatchInfo>[] = [
         {
-          key: 'device', header: 'Device',size:1, cell: ({ cellValue,row }) => {
+          key: 'device', header: 'Device',size:60, cell: ({ cellValue,row }) => {
     
             return <PlatformKindIcon platform={row.original.device}/> ;
           }

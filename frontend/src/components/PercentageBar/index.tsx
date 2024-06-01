@@ -1,8 +1,5 @@
-import React from 'react';
 import './styles.css';
-import { Grid, Typography } from '@mui/material';
-import { useParams } from 'react-router-dom';
-import { useGetBatchInferenceInfoQuery, useGetBatchStatusInfoQuery } from '../../common/api';
+import { Grid } from '@mui/material';
 import Status from './status';
 import Inference from './inference';
 import OOD from './ood';

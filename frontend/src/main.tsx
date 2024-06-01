@@ -1,9 +1,7 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import {
   createBrowserRouter,
-  Navigate,
   RouterProvider,
 } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout.tsx";
@@ -16,7 +14,6 @@ import { SearchProvider } from './common/SearchContext.tsx';
 import LoginLayout from "./layouts/LoginLayout.tsx";
 import LoginPage from "./pages/Login/index";
 import UploadPage from "./pages/Upload/index.tsx";
-import AuthGuard from "./guards/AuthGuard.tsx";
 
 import LogoutPage from "./pages/Logout.tsx";
 
