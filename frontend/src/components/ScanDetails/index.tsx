@@ -1,7 +1,5 @@
-import React from 'react';
 import './styles.css';
-import { createTheme, Grid, Typography } from '@mui/material';
-import { DataGridColumn } from '../DataGrid';
+import {Typography } from '@mui/material';
 import { PlatformKindIcon } from '../PlatformKindIcon';
 import { useParams } from 'react-router-dom';
 import { useGetScanDetailsInfoQuery } from '../../common/api';

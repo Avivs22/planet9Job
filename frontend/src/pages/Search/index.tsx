@@ -13,6 +13,7 @@ import { PlatformKindIcon } from "../../components/PlatformKindIcon";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SearchIcon from '@mui/icons-material/Search';
+import { Search } from "@mui/icons-material";
 
 type ScannedURLInfo = {
   batch_uuid: string;
@@ -111,7 +112,7 @@ export default function SearchPage() {
   return (
     <Box sx={{ m: 5 }}>
       <Grid item sx={{ mt: 1, position: 'relative' }} spacing={3}>
-          <SearchCard disabled={false} placeholder="Enter URL ..." onURLSubmit={() => { }} sendFilteredData={receiveDataFromChild}/>
+          <SearchCard disabled={false} placeholder="Enter URL ..." onURLSubmit={() => { }} sendFilteredData={receiveDataFromChild} submitIcon={<Search/>}/>
       </Grid>
       <Grid item  sx={{ mt: 5, position: 'relative' }}>
         <DataGrid<ScannedURLInfo> theme={dataGridTheme} columns={columns} data={data} isLoading={isLoading} title="All Scanned URLs"/>

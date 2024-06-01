@@ -1,6 +1,4 @@
-import { SocialMediaKind } from "../common/types.ts";
-import { Chip, Stack, SxProps, Typography } from "@mui/material";
-import { CSSProperties } from "react";
+
 
 import androidIcon from "../assets/icons/platforms/android.svg";
 import desktopIcon from "../assets/icons/platforms/desktop.svg"

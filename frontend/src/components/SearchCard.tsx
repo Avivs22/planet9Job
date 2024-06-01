@@ -109,7 +109,7 @@ export function SearchCard(props: SearchCardModelProps) {
   }
 
   const onFilter = () => {
-    const { data, isLoading } = useGetFilteredDataQuery(searchValue);
+    const { data, isLoading } = useGetFilteredDataQuery({filter_object:searchValue});
     if (props.sendFilteredData) {
       props.sendFilteredData(data);
     }

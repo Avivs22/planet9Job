@@ -4,7 +4,6 @@ import ScanDetails from "../../components/ScanDetails";
 import ModelPrediction from "../../components/ModelPrediction";
 import RedirectBar from "../../components/RedirectBar";
 import ScreenShotCard from "../../components/Screenshot.tsx"
-import SunburstChart from "../../components/SunburstChart";
 import SunburstChartComponent from "../../components/Sunburst";
 import SSLCertificate from "../../components/SSLCertificate.tsx"
 import WHOIS from "../../components/WHOIS.tsx"
@@ -19,6 +18,8 @@ type AnalysisParams =  {
 import {   Box,
   } from "@mui/material";
 
+
+  
 const AnalysisPage: React.FC = () => {
     const handleSunburstClick = (data: any) => {
         console.log('Sunburst segment clicked:', data);
@@ -56,14 +57,8 @@ const AnalysisPage: React.FC = () => {
             }}>
       Explainability
     </h1>
-                <SunburstChartComponent />
+                <SunburstChartComponent/>
             </Box>
-            {/* <SunburstChart
-                sampleIdx={0} // Index of the sample to visualize
-                countBy="size" // Property to count by
-                dataKey="name" // Key in the data to use for the segments
-                onClick={handleSunburstClick} // Click handler function
-            /> */}
         </Box>
     )
 }

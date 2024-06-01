@@ -9,9 +9,6 @@ import { useAtomValue,  } from "jotai";
 import { clickedButtonIndexAtom } from '../common/state';
 import { retriveModelExternalLinksElement } from '../common/api.ts';
 
-
-import axios from "axios";
-
 interface GetExternalLinksParams {
   enviroment?:string
   scan_uuid?:string

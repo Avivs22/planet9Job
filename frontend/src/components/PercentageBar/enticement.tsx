@@ -3,6 +3,7 @@ import { Grid, Typography,Tooltip } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { useGetBatchEnticementInfoQuery } from '../../common/api';
 
+const minPrecent = 15;
 type BatchEnticementInfo = {
   adult_content_and_dating: number;
   finance_and_banking: number;
@@ -46,31 +47,32 @@ const Enticement = () => {
 
     return (
       <Grid item xs={12} sm={6}>
-        <Typography sx={{ textAlign: "center", fontFamily:"'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif" }}>Enticement</Typography>
+        <Typography sx={{ textAlign: "center", fontFamily: "Courier, monospace", fontSize:"2rem" }}>Enticement</Typography>
         <div className="progress-bar">
           <Tooltip title={`${adultContentDatingPercentage}%`} arrow>
-            <div className="progress-bar-part adult-content" style={{ width: `${adultContentDatingPercentage}%` }}></div>
-          </Tooltip>
+            <div className="progress-bar-part adult-content" style={{ width: `${adultContentDatingPercentage}%` }}>
+              {parseInt(adultContentDatingPercentage) > minPrecent ? `${adultContentDatingPercentage}%` : ''}</div>
+        </Tooltip>
           <Tooltip title={`${financeBankingPercentage}%`} arrow>
-            <div className="progress-bar-part finance-banking" style={{ width: `${financeBankingPercentage}%` }}></div>
+            <div className="progress-bar-part finance-banking" style={{ width: `${financeBankingPercentage}%` }}>{parseInt(financeBankingPercentage) > minPrecent ? `${financeBankingPercentage}%` : ''}</div>
           </Tooltip>
           <Tooltip title={`${jobScamPercentage}%`} arrow>
-            <div className="progress-bar-part job-scam" style={{ width: `${jobScamPercentage}%` }}></div>
+            <div className="progress-bar-part job-scam" style={{ width: `${jobScamPercentage}%` }}>{parseInt(jobScamPercentage) > minPrecent ? `${jobScamPercentage}%` : ''}</div>
           </Tooltip>
           <Tooltip title={`${businessEcommercePercentage}%`} arrow>
-            <div className="progress-bar-part business-ecommerce" style={{ width: `${businessEcommercePercentage}%` }}></div>
+            <div className="progress-bar-part business-ecommerce" style={{ width: `${businessEcommercePercentage}%` }}>{parseInt(businessEcommercePercentage) > minPrecent ? `${businessEcommercePercentage}%` : ''}</div>
           </Tooltip>
           <Tooltip title={`${otherPercentage}%`} arrow>
-            <div className="progress-bar-part other" style={{ width: `${otherPercentage}%` }}></div>
+            <div className="progress-bar-part other" style={{ width: `${otherPercentage}%` }}>{parseInt(otherPercentage) > minPrecent ? `${otherPercentage}%` : ''}</div>
           </Tooltip>
           <Tooltip title={`${benignEcommercePercentage}%`} arrow>
-            <div className="progress-bar-part benign" style={{ width: `${benignEcommercePercentage}%` }}></div>
+            <div className="progress-bar-part benign" style={{ width: `${benignEcommercePercentage}%` }}>{parseInt(benignEcommercePercentage) > minPrecent ? `${benignEcommercePercentage}%` : ''}</div>
           </Tooltip>
           <Tooltip title={`${urlOodEcommercePercentage}%`} arrow>
-            <div className="progress-bar-part url-ood" style={{ width: `${urlOodEcommercePercentage}%` }}></div>
+            <div className="progress-bar-part url-ood" style={{ width: `${urlOodEcommercePercentage}%` }}>{parseInt(urlOodEcommercePercentage) > minPrecent ? `${urlOodEcommercePercentage}%` : ''}</div>
           </Tooltip>
           <Tooltip title={`${notInferencedEcommercePercentage}%`} arrow>
-            <div className="progress-bar-part not-inferenced-yet" style={{ width: `${notInferencedEcommercePercentage}%` }}></div>
+            <div className="progress-bar-part not-inferenced-yet" style={{ width: `${notInferencedEcommercePercentage}%` }}>{parseInt(notInferencedEcommercePercentage) > minPrecent ? `${notInferencedEcommercePercentage}%` : ''}</div>
           </Tooltip>
         </div>
         <div className="legend">

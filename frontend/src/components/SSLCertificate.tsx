@@ -6,7 +6,6 @@ import {
     Stack, SxProps,
     Typography, List, ListItemButton, ListItemText
 } from "@mui/material";
-import { useSearchParams } from 'react-router-dom';
 import { useQuery } from "react-query";
 import { retriveModeTLSDataElement } from '../common/api.ts';
 import { clickedButtonIndexAtom } from '../common/state';
