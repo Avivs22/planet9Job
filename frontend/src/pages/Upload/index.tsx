@@ -119,20 +119,26 @@ export default function UploadPage() {
     { value: '1m' }
   ];
 
-  const handleFileSubmit = async (file: any) => {
+  const handleFileSubmit = async (file: File) => {
+    console.log(JSON.stringify(file))
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('batch_raw_input', JSON.stringify({ raw_inputs: [], name: file.name }));
-
+  
     try {
-      const response = await axios.post('/api/submit_batch', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      const response = await axios.post('http://0.0.0.0:8000/api/submit_csv', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
       console.log('Upload successful', response.data);
-    } catch (error) {
-      console.error('Error uploading file', error);
+    } catch (error: any) {
+      if (error.response) {
+        console.error('Server error:', error.response.data);
+      } else if (error.request) {
+        console.error('Network error:', error.request);3
+      } else {
+        console.error('Error:', error.message);
+      }
     }
   };
   // const handleFileSubmit = async (file: File) => {
@@ -167,6 +173,41 @@ export default function UploadPage() {
   //   });
   // };
 
+  const handlURLSubmit = async (url: string) => {
+    const rawInputItem: RawInputItem = {
+      raw_input: url,
+      use_proxies: false,
+      proxies: [],
+      crawling_max_depth: 0,
+      priority: 0,
+      env: [],
+      source: ''
+    };
+
+    const batchRawInput: BatchRawInput = {
+      raw_inputs: [rawInputItem],
+      name: url
+    };
+
+    try {
+      const response = await axios.post('/api/submit_batch', batchRawInput, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      console.log('URL submission successful', response.data);
+    } catch (error: any) {
+      if (error.response) {
+        console.error('Server error:', error.response.data);
+      } else if (error.request) {
+        console.error('Network error:', error.request);
+      } else {
+        console.error('Error:', error.message);
+      }
+    }
+  };
+
+
   // TODO ask ohad how to properly pass/use "refreshInterval" so it will change here as user click
   const { data, isLoading } = useGetExecutionQuery<ExecutionInfo[]>({ refreshInterval: 50000 } as ExecutionsParams);
   // console.log(data)
@@ -175,7 +216,7 @@ export default function UploadPage() {
     <Box sx={{ m: 5 }}>
       <Grid container sx={{ mt: 1, position: 'relative' }} spacing={3}>
         <Grid item xs={12}>
-          <SearchCard disabled={false} placeholder="Enter URL or Drag & drop csv file" onURLSubmit={() => { }} onFileSubmit={handleFileSubmit}
+          <SearchCard disabled={false} placeholder="Enter URL or Drag & drop csv file" onURLSubmit={()=>{}} onFileSubmit={handleFileSubmit}
             submitIcon={<Upload />}
           />
         </Grid>

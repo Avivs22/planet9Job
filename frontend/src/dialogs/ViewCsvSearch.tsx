@@ -84,7 +84,7 @@ export function ViewCsvSearchDialog({
 
     try {
       setSearchStatus("sending");
-      await search(filteredUrls);
+      await search(file);
       setSearchStatus("success");
       startCloseCountdown();
     } catch (error) {
