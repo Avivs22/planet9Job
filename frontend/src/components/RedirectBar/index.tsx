@@ -28,7 +28,7 @@ const redirectButtonStyle = {
 
 const redirectButtonStyleClicked = {
     ...redirectButtonStyle,
-    backgroundColor: "rgba(128, 128, 128, 0.5)", // Change to your desired clicked color
+    backgroundColor: "rgba(100, 242, 65, 0.5)", // Change to your desired clicked color
     color: 'white' // Change text color if needed
 };
 
