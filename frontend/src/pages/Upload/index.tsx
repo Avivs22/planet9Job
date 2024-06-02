@@ -21,7 +21,7 @@ type ExecutionInfo = {
   inserted_at: string;
   single_or_batch: string;
   batch_size: number;
-  inference: boolean
+  is_file: boolean
 };
 
 interface RawInputItem {
@@ -120,7 +120,6 @@ export default function UploadPage() {
   ];
 
   const handleFileSubmit = async (file: File) => {
-    console.log(JSON.stringify(file))
     const formData = new FormData();
     formData.append('file', file);
   
@@ -173,39 +172,39 @@ export default function UploadPage() {
   //   });
   // };
 
-  const handlURLSubmit = async (url: string) => {
-    const rawInputItem: RawInputItem = {
-      raw_input: url,
-      use_proxies: false,
-      proxies: [],
-      crawling_max_depth: 0,
-      priority: 0,
-      env: [],
-      source: ''
-    };
+  // const handlURLSubmit = async (url: string) => {
+  //   const rawInputItem: RawInputItem = {
+  //     raw_input: url,
+  //     use_proxies: false,
+  //     proxies: [],
+  //     crawling_max_depth: 0,
+  //     priority: 0,
+  //     env: [],
+  //     source: ''
+  //   };
 
-    const batchRawInput: BatchRawInput = {
-      raw_inputs: [rawInputItem],
-      name: url
-    };
+  //   const batchRawInput: BatchRawInput = {
+  //     raw_inputs: [rawInputItem],
+  //     name: url
+  //   };
 
-    try {
-      const response = await axios.post('/api/submit_batch', batchRawInput, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      console.log('URL submission successful', response.data);
-    } catch (error: any) {
-      if (error.response) {
-        console.error('Server error:', error.response.data);
-      } else if (error.request) {
-        console.error('Network error:', error.request);
-      } else {
-        console.error('Error:', error.message);
-      }
-    }
-  };
+  //   try {
+  //     const response = await axios.post('/api/submit_batch', batchRawInput, {
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //     });
+  //     console.log('URL submission successful', response.data);
+  //   } catch (error: any) {
+  //     if (error.response) {
+  //       console.error('Server error:', error.response.data);
+  //     } else if (error.request) {
+  //       console.error('Network error:', error.request);
+  //     } else {
+  //       console.error('Error:', error.message);
+  //     }
+  //   }
+  // };
 
 
   // TODO ask ohad how to properly pass/use "refreshInterval" so it will change here as user click
