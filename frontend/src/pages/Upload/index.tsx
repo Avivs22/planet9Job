@@ -94,8 +94,8 @@ export default function UploadPage() {
     { key: 'batch_size', header: 'Batch Size' },
     { key: 'name', header: 'Name' },
     { 
-      key: 'is_file', 
-      header: 'Is File',
+      key: 'inference', 
+      header: 'Inference',
       cell: (row:any) => {
         const navigate = useNavigate();
 
