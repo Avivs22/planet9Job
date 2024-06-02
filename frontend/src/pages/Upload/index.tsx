@@ -95,7 +95,7 @@ export default function UploadPage() {
     { key: 'name', header: 'Name' },
     { 
       key: 'is_file', 
-      header: 'Is File',
+      header: 'Inference',
       cell: (row:any) => {
         const navigate = useNavigate();
 
