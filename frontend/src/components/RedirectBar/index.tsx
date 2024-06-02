@@ -20,16 +20,16 @@ const redirectButtonStyle = {
     border: "1px solid #ccc", 
     borderWidth: 2,
     borderRadius: "25px",
-    backgroundColor: "rgba(128, 128, 128, 0.5)",
-    color: 'white',
+    backgroundColor: "rgba(70, 70, 70, 0.5)",
+    color: '#bbbbbb',
     height: "12rem",
     fontSize: "1rem"
 };
 
 const redirectButtonStyleClicked = {
     ...redirectButtonStyle,
-    backgroundColor: "rgba(0, 128, 128, 0.5)", // Change to your desired clicked color
-    color: 'yellow' // Change text color if needed
+    backgroundColor: "rgba(128, 128, 128, 0.5)", // Change to your desired clicked color
+    color: 'white' // Change text color if needed
 };
 
 type RedirectInfo = {

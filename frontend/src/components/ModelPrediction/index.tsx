@@ -30,7 +30,7 @@ const ModelPrediction = () => {
   const { data } = useGetModelPredictionInfoQuery<ModelPredictionInfo>({ scan_uuid, enviroment });
   console.log(data)
   return (
-    <div className="status-card" style={{marginBottom:"2rem",marginRight:"-2.2rem"}}>
+    <div className="status-card" style={{marginBottom:"2rem",marginRight:"3rem"}}>
       <div className="status-item">
         <span className="label">INFERENCE</span>
         <span className="value" style={{ color: '#56ccf2' }}>{data?.scams_model.prediction}</span>

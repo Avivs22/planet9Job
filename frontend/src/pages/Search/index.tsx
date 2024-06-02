@@ -14,6 +14,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SearchIcon from '@mui/icons-material/Search';
 import { Search } from "@mui/icons-material";
+import AnalyticsIcon from '@mui/icons-material/Analytics';
 
 type ScannedURLInfo = {
   batch_uuid: string;
@@ -83,19 +84,19 @@ export default function SearchPage() {
       )
      },
      {
-      key: 'inference', // Unique key for the new column
-      header: 'Inference', // No header for the redirect icon column
+      key: 'analyze', 
+      header: 'Analyze',
       cell: ({ row }) => {
           const navigate = useNavigate();
 
           const handleRedirect = () => {
-              navigate(`/inference/${row.original.batch_uuid}`);
+              navigate(`/analysis/${row.original.scan_uuid}/${row.original.device}`);
           };
 
           return (
-              <IconButton onClick={handleRedirect}>
-                  <SearchIcon />
-              </IconButton>
+            <Button onClick={handleRedirect} variant="outlined" style={{ textTransform: 'none', color: 'white', borderRadius: '20px' }}>
+              <AnalyticsIcon/>
+            </Button>
           );
       },
     }

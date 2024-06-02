@@ -7,7 +7,7 @@
     padding: 12px;
     border-radius: 10px;
     height: 80px;
-    width: 50%;
+    width: 40%;
     align-self: flex-end;
     margin-top: "100px";
 }
@@ -19,7 +19,7 @@
     align-items: space-between;
     text-align: center;
     color: white;
-    width: 250px;
+    width: 32%;
     height: 80px;
     border-radius: 10px;
     background-image: linear-gradient(to bottom, #8f9ca6, #45525a);
@@ -44,11 +44,11 @@
 }
 
 .benign {
-    color: #56ccf2;
+    color: #ffffff;
 }
 
 .not-ood {
-    color: #f2994a;
+    color: #ffffff;
 }
 
 .job-scam {

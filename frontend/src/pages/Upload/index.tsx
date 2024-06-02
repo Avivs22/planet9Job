@@ -21,7 +21,7 @@ type ExecutionInfo = {
   inserted_at: string;
   single_or_batch: string;
   batch_size: number;
-  is_file: boolean
+  inference: boolean
 };
 
 interface RawInputItem {
@@ -94,7 +94,7 @@ export default function UploadPage() {
     { key: 'batch_size', header: 'Batch Size' },
     { key: 'name', header: 'Name' },
     { 
-      key: 'is_file', 
+      key: 'inference', 
       header: 'Inference',
       cell: (row:any) => {
         const navigate = useNavigate();
