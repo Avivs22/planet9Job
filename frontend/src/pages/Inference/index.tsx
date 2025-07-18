@@ -15,12 +15,8 @@ type BatchInfo = {
     scan_uuid: string;
 };
 
-interface InferencePageParams {
-  batch_uuid: string;
-}
-
 const InferencePage: React.FC = () => {
-    const { batch_uuid } = useParams<InferencePageParams>();
+    const { batch_uuid } = useParams<{ batch_uuid: string }>()
     const dataGridTheme = createTheme({
         palette: {
           mode: 'dark',
