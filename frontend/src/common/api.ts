@@ -1,5 +1,5 @@
 import { useQuery, UseQueryResult } from "react-query";
-import axiosInstance from './axiosInstanceInstance';
+import axiosInstance from './axiosInterface.ts';
 import {
   Case,
   Platform,
